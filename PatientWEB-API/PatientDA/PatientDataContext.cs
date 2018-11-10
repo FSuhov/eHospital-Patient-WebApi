@@ -32,7 +32,7 @@ namespace PatientDA
         /// <summary>
         /// Gets or sets the collection of Patients using EF models
         /// </summary>
-        public DbSet<PatientInfo> Patients { get; set; }
+        public DbSet<PatientInfo> PatientInfo { get; set; }
 
         /// <summary>
         /// Adds new image to the collection
@@ -50,7 +50,7 @@ namespace PatientDA
         /// <param name="patient">PatientInfo instance</param>
         public void AddPatient(PatientInfo patient)
         {
-            Patients.Add(patient);
+            PatientInfo.Add(patient);
             SaveChanges();
         }
 
@@ -80,7 +80,7 @@ namespace PatientDA
         /// <returns>Patient with requested Id or NULL if not found</returns>
         public PatientInfo GetPatient(int id)
         {
-            return Patients.FirstOrDefault(p => p.PatientId == id);
+            return PatientInfo.FirstOrDefault(p => p.PatientId == id);
         }
 
         /// <summary>
@@ -89,7 +89,7 @@ namespace PatientDA
         /// <returns>Collection of PatientInfos</returns>
         public IEnumerable<PatientInfo> GetPatients()
         {
-            return Patients.ToList();
+            return PatientInfo.ToList();
         }
 
         /// <summary>
