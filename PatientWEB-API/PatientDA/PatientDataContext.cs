@@ -24,6 +24,18 @@ namespace PatientDA
         {
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<PatientInfo>()
+                .ToTable("PatientInfo");
+            modelBuilder.Entity<Image>()
+                .ToTable("Images");
+            modelBuilder.Entity<Image>()
+                .Property(i => i.ImageContent)
+                .HasColumnName("Image");
+
+        }
+
         /// <summary>
         /// Gets or sets the collection of Images using EF models
         /// </summary>
@@ -32,7 +44,7 @@ namespace PatientDA
         /// <summary>
         /// Gets or sets the collection of Patients using EF models
         /// </summary>
-        public DbSet<PatientInfo> PatientInfo { get; set; }
+        public DbSet<PatientInfo> Patients { get; set; }
 
         /// <summary>
         /// Adds new image to the collection
@@ -50,7 +62,7 @@ namespace PatientDA
         /// <param name="patient">PatientInfo instance</param>
         public void AddPatient(PatientInfo patient)
         {
-            PatientInfo.Add(patient);
+            Patients.Add(patient);
             SaveChanges();
         }
 
@@ -80,7 +92,7 @@ namespace PatientDA
         /// <returns>Patient with requested Id or NULL if not found</returns>
         public PatientInfo GetPatient(int id)
         {
-            return PatientInfo.FirstOrDefault(p => p.PatientId == id);
+            return Patients.FirstOrDefault(p => p.PatientId == id);
         }
 
         /// <summary>
@@ -89,7 +101,7 @@ namespace PatientDA
         /// <returns>Collection of PatientInfos</returns>
         public IEnumerable<PatientInfo> GetPatients()
         {
-            return PatientInfo.ToList();
+            return Patients.ToList();
         }
 
         /// <summary>

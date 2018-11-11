@@ -22,20 +22,59 @@ namespace PatientAPI.Controllers
         /// </summary>
         private IPatientService _service;
 
+        /// <summary>
+        /// Initializes new instanct of THIS setting business logic object (_service)
+        /// </summary>
+        /// <param name="service">Object implementing business logic for this controller</param>
         public PatientController(IPatientService service)
         {
             _service = service;
         }
 
-        // GET: api/Patient
+        /// <summary>
+        /// Handles request GET: ../api/patient/
+        /// Selects all PatientInfo objects available in the database table PatientInfo
+        /// </summary>
+        /// <returns>Collecton of PatientView models containing Id, firstname and lastname</returns>
         [HttpGet]
         public ActionResult<IEnumerable<PatientView>> Get()
         {
             return _service.GetPatients().ToList();
         }
 
-        // GET: api/Patient/5
-        [HttpGet("{id}", Name = "Get")]
+        /// <summary>
+        /// Handles request GET: ../api/patient/recent
+        /// Selects all PatientInfo objects having recent appontments
+        /// </summary>
+        /// <returns>Collecton of PatientView models containing Id, firstname and lastname</returns>
+        [HttpGet("patient/recent")]
+        public ActionResult<IEnumerable<PatientView>> GetRecent()
+        {
+            // TODO: Re-implement when PatientAppointment table available
+
+            return _service.GetPatients().ToList();
+        }
+
+        /// <summary>
+        /// Handles request GET: ../api/patient/{userText}
+        /// Tries to find all PatientInfo instances in the database containing text entered
+        /// by User in the FirstName or LastName
+        /// </summary>
+        /// <param name="lookUp">Text entered by User in the search window</param>
+        /// <returns>Collection of PatientViews matching search criteria</returns>
+        [HttpGet("patient/{lookUp}")]
+        public ActionResult<IEnumerable<PatientView>> GetRecent(string lookUp)
+        {
+            return _service.GetPatientsByText(lookUp).ToList();
+        }
+
+        /// <summary>
+        /// Handles request GET: api/patient/5
+        /// Looks up PatientInfo instance with specified Id
+        /// </summary>
+        /// <param name="id">Id of patient to look for</param>
+        /// <returns>Detailed patient object (all fields) or Not Found</returns>
+        [HttpGet("{id}", Name = "GetPatient")]
         public ActionResult<PatientInfo> Get(int id)
         {
             var patient = _service.GetPatientById(id);
@@ -48,7 +87,12 @@ namespace PatientAPI.Controllers
             return patient;
         }
 
-        // POST: api/Patient
+        /// <summary>
+        /// Handles request POST: ../api/patient/+{Object in body}
+        /// Adds new PatientInfo object to the database if valid
+        /// </summary>
+        /// <param name="patient">PatientInfo object</param>
+        /// <returns>PatientInfo object created or Bad Request</returns>
         [HttpPost]
         public IActionResult Add([FromBody] PatientInfo patient)
         {
@@ -62,7 +106,14 @@ namespace PatientAPI.Controllers
             return Created("PatientInfo", patient);
         }
 
-        // PUT: api/Patient/5
+        /// <summary>
+        /// Handles request PUT: ../api/patient/{id}+{Object in body}
+        /// Looks for PatientInfo object in the database with requested Id
+        /// Updates properties of tha object cloning it from Object passed in body
+        /// </summary>
+        /// <param name="id">Id to look for</param>
+        /// <param name="patient">PatientInfo object to be cloned from </param>
+        /// <returns>Ok result or BadRequest if wrong/invalid object passed</returns>
         [HttpPut("{id}")]
         public IActionResult Update(int id, [FromBody]  PatientInfo patient)
         {
@@ -76,7 +127,13 @@ namespace PatientAPI.Controllers
             return Ok();
         }
 
-        // DELETE: api/ApiWithActions/5
+        /// <summary>
+        /// Handles request DELETE:  ../api/patient/{id}
+        /// Looks for PatientInfo object with requested Id
+        /// Sets to TRUE its property IsDisabled
+        /// </summary>
+        /// <param name="id">Id to look for</param>
+        /// <returns>No content</returns>
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {

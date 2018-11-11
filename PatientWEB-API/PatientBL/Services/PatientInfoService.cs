@@ -15,6 +15,11 @@ namespace PatientBL.Services
         private readonly IMapper _mapper;
         public PatientInfoService() { }
 
+        /// <summary>
+        /// Initializes new instance of THIS, setting data provider(_data) and mapper
+        /// </summary>
+        /// <param name="data">Data provider to be used in this class</param>
+        /// <param name="mapper">Mapper configured to accomplish required mapping with ViewNodel</param>
         public PatientInfoService(IPatientData data, IMapper mapper)
         {
             _data = data;
@@ -62,7 +67,8 @@ namespace PatientBL.Services
         /// <returns>Collection of PatientView objects matching the query text</returns>
         public IEnumerable<PatientView> GetPatientsByText(string input)
         {
-            var result = _data.GetPatients().Where(p => p.FirstName.Contains(input) || p.LastName.Contains(input));
+            var result = _data.GetPatients().Where(p => p.FirstName.ToLower().Contains(input.ToLower()) 
+                                                      || p.LastName.ToLower().Contains(input.ToLower()));
             var viewResult = _mapper.Map<IEnumerable<PatientInfo>, IEnumerable<PatientView>>(result);
             return viewResult;
         }
@@ -98,6 +104,20 @@ namespace PatientBL.Services
         }
 
         /// <summary>
+        /// Sets IsDisabled property of Patient instance to true 
+        /// </summary>
+        /// <param name="patientId">Id of patient to be disabled</param>
+        public void DeletePatient(int patientId)
+        {
+            PatientInfo patientToDelete = _data.GetPatient(patientId);
+
+            if (patientToDelete != null)
+            {
+                patientToDelete.IsDeleted = true;
+            }
+        }
+
+        /// <summary>
         /// Gets a collection of all Image objects available in the database
         /// </summary>
         /// <returns>Collection of Image objects</returns>
@@ -116,14 +136,6 @@ namespace PatientBL.Services
             return _data.GetImage(imageId);
         }
 
-        public void DeletePatient(int patientId)
-        {
-            PatientInfo patientToDelete = _data.GetPatient(patientId);
-
-            if (patientToDelete != null)
-            {
-                patientToDelete.IsDeleted = true;
-            }
-        }
+        
     }
 }

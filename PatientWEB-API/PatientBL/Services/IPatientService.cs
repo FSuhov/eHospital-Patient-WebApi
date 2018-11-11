@@ -63,6 +63,10 @@ namespace PatientBL.Services
         /// <param name="patient">PatientInfo object to be cloned from</param>
         void UpdatePatient(int patientId, PatientInfo patient);
 
+        /// <summary>
+        /// Sets IsDisabled property of Patient instance to true 
+        /// </summary>
+        /// <param name="patientId">Id of patient to be disabled</param>
         void DeletePatient(int patientId);
     }
 }
