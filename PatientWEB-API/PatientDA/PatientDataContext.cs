@@ -46,6 +46,8 @@ namespace PatientDA
         /// </summary>
         public DbSet<PatientInfo> Patients { get; set; }
 
+        public DbSet<Appointment> Appointments { get; set; }
+
         /// <summary>
         /// Adds new image to the collection
         /// </summary>
@@ -104,6 +106,11 @@ namespace PatientDA
             return Patients.ToList();
         }
 
+        public IEnumerable<Appointment> GetAppointments()
+        {
+            return Appointments.ToList();
+        }
+
         /// <summary>
         /// Saves changes in the collections
         /// Calls DbContext base SaveChanges Method
@@ -112,5 +119,7 @@ namespace PatientDA
         {
             this.SaveChanges();
         }
+
+
     }
 }

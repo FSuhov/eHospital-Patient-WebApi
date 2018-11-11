@@ -33,7 +33,8 @@ namespace PatientBL.Services
         public IEnumerable<PatientView> GetPatients()
         {
             IEnumerable<PatientInfo> patients = _data.GetPatients();
-            var result = _mapper.Map<IEnumerable<PatientInfo>, IEnumerable<PatientView>>(patients);
+            List<PatientView> result = _mapper.Map<IEnumerable<PatientInfo>, IEnumerable<PatientView>>(patients).ToList();
+            result.Sort();
             return result;
         }
 
@@ -44,9 +45,13 @@ namespace PatientBL.Services
         public IEnumerable<PatientView> GetRecentPatients()
         {
             // TODO: Implement search throw PatientAppoinment table when available
+            var recentPatients = (from patient in _data.GetPatients()
+                                  join entry in _data.GetAppointments() on patient.PatientId equals entry.PatientId
+                                  orderby entry.AppointmentDateTime
+                                  select patient).Take(3);
+            
+            var result = _mapper.Map<IEnumerable<PatientInfo>, IEnumerable<PatientView>>(recentPatients);
 
-            IEnumerable<PatientInfo> patients = _data.GetPatients();
-            var result = _mapper.Map<IEnumerable<PatientInfo>, IEnumerable<PatientView>>(patients);
             return result;
         }
 

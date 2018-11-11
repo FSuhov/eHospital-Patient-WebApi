@@ -33,7 +33,7 @@ namespace PatientAPI.Controllers
 
         /// <summary>
         /// Handles request GET: ../api/patient/
-        /// Selects all PatientInfo objects available in the database table PatientInfo
+        /// Retrieves all PatientInfo objects available in the database table PatientInfo
         /// </summary>
         /// <returns>Collecton of PatientView models containing Id, firstname and lastname</returns>
         [HttpGet]

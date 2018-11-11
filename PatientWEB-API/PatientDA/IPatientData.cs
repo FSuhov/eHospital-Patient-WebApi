@@ -9,6 +9,7 @@ namespace PatientDA
     {
         IEnumerable<Image> GetImages();
         IEnumerable<PatientInfo> GetPatients();
+        IEnumerable<Appointment> GetAppointments();
 
         Image GetImage(int id);
         void AddImage(Image image);
