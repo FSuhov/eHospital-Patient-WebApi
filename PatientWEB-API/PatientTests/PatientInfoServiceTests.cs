@@ -29,7 +29,7 @@ namespace PatientTests
                 cfg.CreateMap<PatientInfo, PatientView>();
             });
             IMapper mapper = config.CreateMapper();
-
+            _mapper = mapper;
             _service = new PatientInfoService(_data.Object, mapper);
         }
 
@@ -37,16 +37,30 @@ namespace PatientTests
         public void GetPatientsTest_ReturnsSorterCollection()
         {
             // Arrange
+            List<PatientView> expected = _mapper.Map<List<PatientInfo>, List<PatientView>>(mockPatients);
+            expected.Sort();
 
             // Act
-            List<PatientView> actualPatients = _service.GetPatients().ToList();            
+            List<PatientView> actualPatients = _service.GetPatients().ToList();
 
             // Assert
-            Assert.AreEqual(mockPatients.Count, actualPatients.Count);            
+            bool isAllEntriesEqual = true;
+            for(int i = 0; i < expected.Count && i < actualPatients.Count; i++)
+            {
+                if (expected.ElementAt(i).FirstName != actualPatients.ElementAt(i).FirstName
+                    && expected.ElementAt(i).LastName != actualPatients.ElementAt(i).LastName)
+                {
+                    isAllEntriesEqual = false;
+                }
+            }
+            Assert.AreEqual(mockPatients.Count, actualPatients.Count);
+            Assert.AreEqual(true, isAllEntriesEqual);
         }
 
         [TestMethod]
         [DataRow(2)]
+        [DataRow(3)]
+        [DataRow(9)]
         public void GetPatientByIdWhenValidId_ReturnsCorrectPatientInfo(int id)
         {
             // Arrange
@@ -59,6 +73,72 @@ namespace PatientTests
             // Assert
             Assert.AreEqual(expectedName, patient.FirstName);
             Assert.AreEqual(expectedSurname, patient.LastName);
+        }
+
+        [TestMethod]
+        [DataRow(12)]
+        public void GetPatientByIdWhenNotValidId_ReturnsNull(int id)
+        {
+            // Arrange
+           
+            // Act
+            PatientInfo patient = _service.GetPatientById(id);            
+
+            // Assert
+            Assert.AreEqual(null, patient);            
+        }
+
+        [TestMethod]
+        public void GetRecentPatients_ReturnsCollectionOfRecent()
+        {
+            // Arrange
+            List<PatientInfo> recent = new List<PatientInfo>();
+            recent.Add(mockPatients.First(p => p.PatientId == 10));
+            recent.Add(mockPatients.First(p => p.PatientId == 2));
+            recent.Add(mockPatients.First(p => p.PatientId == 1));
+            List<PatientView> recentViews = _mapper.Map<List<PatientInfo>, List<PatientView>>(recent);
+
+            // Act
+            List<PatientView> actualRecent = _service.GetRecentPatients().ToList();
+
+            // Assert
+            bool isAllEntriesEqual = true;
+            for (int i = 0; i < recentViews.Count && i < actualRecent.Count; i++)
+            {
+                if (recentViews.ElementAt(i).FirstName != actualRecent.ElementAt(i).FirstName
+                    && recentViews.ElementAt(i).LastName != actualRecent.ElementAt(i).LastName)
+                {
+                    isAllEntriesEqual = false;
+                }
+            }
+            Assert.AreEqual(true, isAllEntriesEqual);
+        }
+
+        [TestMethod]
+        [DataRow("bo")]
+        [DataRow("on")]
+        [DataRow("ar")]
+        public void GetPatientsByTextTest_ReturnsCollectionOfPatientViews(string input)
+        {
+            // Arrange
+            List<PatientView> allPatientViews = _mapper.Map<List<PatientInfo>, List<PatientView>>(mockPatients);
+            List<PatientView> matchingPatients = allPatientViews.Where(p => p.FirstName.ToLower().Contains(input.ToLower())
+                                                                          ||p.LastName.ToLower().Contains(input.ToLower())).ToList();
+
+            // Act
+            List<PatientView> actualPatients = _service.GetPatientsByText(input).ToList();
+
+            // Assert
+            bool isAllEntriesEqual = true;
+            for (int i = 0; i < matchingPatients.Count && i < actualPatients.Count; i++)
+            {
+                if (matchingPatients.ElementAt(i).FirstName != actualPatients.ElementAt(i).FirstName
+                    && matchingPatients.ElementAt(i).LastName != actualPatients.ElementAt(i).LastName)
+                {
+                    isAllEntriesEqual = false;
+                }
+            }
+            Assert.AreEqual(true, isAllEntriesEqual);
         }
 
         private static List<Image> mockImages = new List<Image>

@@ -37,9 +37,11 @@ namespace PatientAPI.Controllers
         /// </summary>
         /// <returns>Collecton of PatientView models containing Id, firstname and lastname</returns>
         [HttpGet]
-        public ActionResult<IEnumerable<PatientView>> Get()
+        public IActionResult Get()
         {
-            return _service.GetPatients().ToList();
+            List<PatientView> patients = _service.GetPatients().ToList();
+
+            return Ok(patients);
         }
 
         /// <summary>
@@ -47,12 +49,12 @@ namespace PatientAPI.Controllers
         /// Selects all PatientInfo objects having recent appontments
         /// </summary>
         /// <returns>Collecton of PatientView models containing Id, firstname and lastname</returns>
-        [HttpGet("patient/recent")]
-        public ActionResult<IEnumerable<PatientView>> GetRecent()
+        [HttpGet("recent")]
+        public IActionResult GetRecent()
         {
-            // TODO: Re-implement when PatientAppointment table available
+            List<PatientView> recentPatients = _service.GetRecentPatients().ToList();
 
-            return _service.GetPatients().ToList();
+            return Ok(recentPatients);
         }
 
         /// <summary>
@@ -62,10 +64,12 @@ namespace PatientAPI.Controllers
         /// </summary>
         /// <param name="lookUp">Text entered by User in the search window</param>
         /// <returns>Collection of PatientViews matching search criteria</returns>
-        [HttpGet("patient/{lookUp}")]
-        public ActionResult<IEnumerable<PatientView>> GetRecent(string lookUp)
+        [HttpGet("name={lookUp}")]
+        public IActionResult Get(string lookUp)
         {
-            return _service.GetPatientsByText(lookUp).ToList();
+            List<PatientView> patients = _service.GetPatientsByText(lookUp).ToList();
+
+            return Ok(patients);
         }
 
         /// <summary>
@@ -74,17 +78,17 @@ namespace PatientAPI.Controllers
         /// </summary>
         /// <param name="id">Id of patient to look for</param>
         /// <returns>Detailed patient object (all fields) or Not Found</returns>
-        [HttpGet("{id}", Name = "GetPatient")]
-        public ActionResult<PatientInfo> Get(int id)
+        [HttpGet("id={id}", Name = "GetPatient")]
+        public IActionResult Get(int id)
         {
-            var patient = _service.GetPatientById(id);
+            PatientInfo patient = _service.GetPatientById(id);
 
             if (patient == null)
             {
                 return NotFound();
             }
 
-            return patient;
+            return Ok(patient);
         }
 
         /// <summary>

@@ -21,7 +21,7 @@ namespace PatientDA
         /// </summary>
         /// /// <param name="options"> An options for connecting to data source </param>
         public PatientDataContext(DbContextOptions<PatientDataContext> options) : base(options)
-        {
+        {            
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -33,7 +33,7 @@ namespace PatientDA
             modelBuilder.Entity<Image>()
                 .Property(i => i.ImageContent)
                 .HasColumnName("Image");
-
+            
         }
 
         /// <summary>
@@ -118,8 +118,6 @@ namespace PatientDA
         public void Save()
         {
             this.SaveChanges();
-        }
-
-
+        }        
     }
 }

@@ -32,7 +32,7 @@ namespace PatientBL.Services
         /// <returns> The collection of PatientView objects.</returns>
         public IEnumerable<PatientView> GetPatients()
         {
-            IEnumerable<PatientInfo> patients = _data.GetPatients();
+            IEnumerable<PatientInfo> patients = _data.GetPatients().Where(p => p.IsDeleted != true);
             List<PatientView> result = _mapper.Map<IEnumerable<PatientInfo>, IEnumerable<PatientView>>(patients).ToList();
             result.Sort();
             return result;
@@ -46,8 +46,9 @@ namespace PatientBL.Services
         {
             // TODO: Implement search throw PatientAppoinment table when available
             var recentPatients = (from patient in _data.GetPatients()
+                                  where patient.IsDeleted != true
                                   join entry in _data.GetAppointments() on patient.PatientId equals entry.PatientId
-                                  orderby entry.AppointmentDateTime
+                                  orderby entry.AppointmentDateTime descending
                                   select patient).Take(3);
             
             var result = _mapper.Map<IEnumerable<PatientInfo>, IEnumerable<PatientView>>(recentPatients);
@@ -119,6 +120,7 @@ namespace PatientBL.Services
             if (patientToDelete != null)
             {
                 patientToDelete.IsDeleted = true;
+                _data.Save();
             }
         }
 
