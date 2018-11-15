@@ -141,6 +141,26 @@ namespace PatientTests
             Assert.AreEqual(true, isAllEntriesEqual);
         }
 
+
+        [TestMethod]
+        public void AddNewPatientText_AddsNewPatientToCollection()
+        {
+            // Arrange
+            PatientInfo newPatient = new PatientInfo { PatientId = 11, FirstName = "Klavdia", LastName = "Popkina", BirthDate = new System.DateTime(1969, 1, 12), Gender = 2 };
+
+            // Act
+            _service.AddPatient(newPatient);
+
+            // Assert
+            int actualCount = _service.GetPatients().Count();
+            int expectedCount = mockPatients.Count;
+
+            bool isNewPatientAdded = _service.GetPatientById(11) != null;
+
+            Assert.AreEqual(expectedCount, actualCount);
+            Assert.AreEqual(true, isNewPatientAdded);
+        }
+
         private static List<Image> mockImages = new List<Image>
         {
             new Image{ImageId = 1, ImageName = "James_Bond.jpg"},
