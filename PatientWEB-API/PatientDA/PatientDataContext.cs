@@ -75,7 +75,7 @@ namespace PatientDA
         /// <returns>Image object with requested Id or NULL if not found</returns>
         public Image GetImage(int id)
         {
-            return Images.FirstOrDefault(i => i.ImageId == id);
+            return Images.FirstOrDefault(i => i.Id == id);
         }
 
         /// <summary>
@@ -94,7 +94,7 @@ namespace PatientDA
         /// <returns>Patient with requested Id or NULL if not found</returns>
         public PatientInfo GetPatient(int id)
         {
-            return Patients.FirstOrDefault(p => p.PatientId == id);
+            return Patients.FirstOrDefault(p => p.Id == id);
         }
 
         /// <summary>

@@ -27,7 +27,7 @@ namespace PatientTests
         
         public Image GetImage(int id)
         {
-            return Images.FirstOrDefault(i => i.ImageId == id);
+            return Images.FirstOrDefault(i => i.Id == id);
         }
 
         public IEnumerable<Image> GetImages()
@@ -37,7 +37,7 @@ namespace PatientTests
                 
         public PatientInfo GetPatient(int id)
         {
-            return Patients.FirstOrDefault(p => p.PatientId == id);
+            return Patients.FirstOrDefault(p => p.Id == id);
         }
         
         public IEnumerable<PatientInfo> GetPatients()

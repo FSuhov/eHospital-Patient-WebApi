@@ -15,7 +15,7 @@ namespace PatientBO.Models
         /// Gets or sets a Unique number to identify the book and store in the Database
         /// </summary>
         [Key]
-        public int PatientId { get; set; }
+        public int Id { get; set; }
 
         [Required]
         public string FirstName { get; set; }

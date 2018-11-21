@@ -8,7 +8,7 @@ namespace PatientBO.Models
     public class Appointment
     {
         [Key]
-        public int AppointmentId { get; set; }
+        public int Id { get; set; }
         public int PatientId { get; set; }
         public int UserId { get; set; }
         public DateTime AppointmentDateTime { get; set; }

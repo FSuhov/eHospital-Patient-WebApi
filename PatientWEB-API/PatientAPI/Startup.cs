@@ -29,11 +29,11 @@ namespace PatientAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            string connection = @"Server=DESKTOP-PU90CNF;Database=eHealthDB;Trusted_Connection=True;ConnectRetryCount=0";
+            //string connection = @"Server=DESKTOP-PU90CNF;Database=eHealthDB;Trusted_Connection=True;ConnectRetryCount=0";
 
             services.AddAutoMapper();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            services.AddDbContext<IPatientData, PatientDataContext>(options => options.UseSqlServer(connection));
+            services.AddDbContext<IPatientData, PatientDataContext>(options => options.UseSqlServer(Configuration.GetConnectionString("EHospitalDatabase")));
             services.AddScoped<IPatientService, PatientInfoService>();
 
             services.AddSwaggerGen(c =>

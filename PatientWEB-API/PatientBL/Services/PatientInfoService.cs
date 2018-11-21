@@ -47,7 +47,7 @@ namespace PatientBL.Services
             // TODO: Implement search throw PatientAppoinment table when available
             var recentPatients = (from patient in _data.GetPatients()
                                   where patient.IsDeleted != true
-                                  join entry in _data.GetAppointments() on patient.PatientId equals entry.PatientId
+                                  join entry in _data.GetAppointments() on patient.Id equals entry.PatientId
                                   orderby entry.AppointmentDateTime descending
                                   select patient).Take(3);
             

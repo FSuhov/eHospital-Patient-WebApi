@@ -15,7 +15,7 @@ namespace PatientBO.Models
         /// Gets or sets a Unique number to identify the book and store in the Database
         /// </summary>
         [Key]
-        public int ImageId { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
         /// Gets or sets the name of Image

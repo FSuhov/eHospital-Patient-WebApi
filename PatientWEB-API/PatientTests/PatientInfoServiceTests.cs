@@ -67,8 +67,8 @@ namespace PatientTests
 
             // Act
             PatientInfo patient = _service.GetPatientById(id);
-            string expectedName = mockPatients.FirstOrDefault(p => p.PatientId == id).FirstName;
-            string expectedSurname = mockPatients.FirstOrDefault(p => p.PatientId == id).LastName;
+            string expectedName = mockPatients.FirstOrDefault(p => p.Id == id).FirstName;
+            string expectedSurname = mockPatients.FirstOrDefault(p => p.Id == id).LastName;
 
             // Assert
             Assert.AreEqual(expectedName, patient.FirstName);
@@ -93,9 +93,9 @@ namespace PatientTests
         {
             // Arrange
             List<PatientInfo> recent = new List<PatientInfo>();
-            recent.Add(mockPatients.First(p => p.PatientId == 10));
-            recent.Add(mockPatients.First(p => p.PatientId == 2));
-            recent.Add(mockPatients.First(p => p.PatientId == 1));
+            recent.Add(mockPatients.First(p => p.Id == 10));
+            recent.Add(mockPatients.First(p => p.Id == 2));
+            recent.Add(mockPatients.First(p => p.Id == 1));
             List<PatientView> recentViews = _mapper.Map<List<PatientInfo>, List<PatientView>>(recent);
 
             // Act
@@ -146,7 +146,7 @@ namespace PatientTests
         public void AddNewPatientText_AddsNewPatientToCollection()
         {
             // Arrange
-            PatientInfo newPatient = new PatientInfo { PatientId = 11, FirstName = "Klavdia", LastName = "Popkina", BirthDate = new System.DateTime(1969, 1, 12), Gender = 2 };
+            PatientInfo newPatient = new PatientInfo { Id = 11, FirstName = "Klavdia", LastName = "Popkina", BirthDate = new System.DateTime(1969, 1, 12), Gender = 2 };
 
             // Act
             _service.AddPatient(newPatient);
@@ -163,40 +163,40 @@ namespace PatientTests
 
         private static List<Image> mockImages = new List<Image>
         {
-            new Image{ImageId = 1, ImageName = "James_Bond.jpg"},
-            new Image{ImageId = 2, ImageName = "Ivy_Young.jpg"},
-            new Image{ImageId = 3, ImageName = "Melissa_Brown.jpg"},
-            new Image{ImageId = 4, ImageName = "John_Smith.jpg"},
-            new Image{ImageId = 5, ImageName = "Kevin_McBribe.jpg"},
+            new Image{Id = 1, ImageName = "James_Bond.jpg"},
+            new Image{Id = 2, ImageName = "Ivy_Young.jpg"},
+            new Image{Id = 3, ImageName = "Melissa_Brown.jpg"},
+            new Image{Id = 4, ImageName = "John_Smith.jpg"},
+            new Image{Id = 5, ImageName = "Kevin_McBribe.jpg"},
         };
 
         private static List<PatientInfo> mockPatients = new List<PatientInfo>
         {
-            new PatientInfo{PatientId = 1, FirstName = "James", LastName = "Bond", Country ="UK", City = "London", Address = "Douning str, 11", BirthDate = new System.DateTime(1970, 1, 18), Phone="380505554334", Email = "mi5@gmail.com", Gender = 1, ImageId = 1, IsDeleted = false},
-            new PatientInfo{PatientId = 2, FirstName = "Ivy", LastName = "Young", Country ="Ireland", City = "Dublin", Address = "Yellow park, 1", BirthDate = new System.DateTime(1980, 9, 28), Phone="380671119999", Email = "ivy@gmail.com", Gender = 2, ImageId = 2, IsDeleted = false},
-            new PatientInfo{PatientId = 3, FirstName = "Melissa", LastName = "Brown", Country ="Sweden", City = "Stokholm", Address = "Norcheping av, 110", BirthDate = new System.DateTime(1990, 3, 8), Phone="380635554334", Email = "mel@outlook.com", Gender = 2, ImageId = 3, IsDeleted = false},
-            new PatientInfo{PatientId = 4, FirstName = "John", LastName = "Smith", Country ="UK", City = "London", Address = "Westminster, 11", BirthDate = new System.DateTime(1956, 1, 18), Phone="380975554334", Email = "jo@gmail.com", Gender = 1, ImageId = 4, IsDeleted = false},
-            new PatientInfo{PatientId = 5, FirstName = "Kevin", LastName = "McBribe", Country ="UK", City = "Aberdin", Address = "Lake view sq, 11", BirthDate = new System.DateTime(1970, 1, 18), Phone="380505554334", Email = "scottish@gmail.com", Gender = 1, ImageId = 5, IsDeleted = false},
-            new PatientInfo{PatientId = 6, FirstName = "Elizabeth", LastName = "Parker", Country ="UK", City = "London", Address = "Douning str, 11", BirthDate = new System.DateTime(1970, 1, 18), Phone="380505554334", Email = "mi5@gmail.com", Gender = 2, ImageId = 1, IsDeleted = false},
-            new PatientInfo{PatientId = 7, FirstName = "Frank", LastName = "Connor", Country ="UK", City = "London", Address = "Douning str, 11", BirthDate = new System.DateTime(1970, 1, 18), Phone="380505554334", Email = "mi5@gmail.com", Gender = 1, ImageId = 1, IsDeleted = false},
-            new PatientInfo{PatientId = 8, FirstName = "Anna", LastName = "Green", Country ="UK", City = "London", Address = "Douning str, 11", BirthDate = new System.DateTime(1970, 1, 18), Phone="380505554334", Email = "mi5@gmail.com", Gender = 1, ImageId = 1, IsDeleted = false},
-            new PatientInfo{PatientId = 9, FirstName = "Sarah", LastName = "Zimmermann", Country ="UK", City = "London", Address = "Douning str, 11", BirthDate = new System.DateTime(1970, 1, 18), Phone="380505554334", Email = "mi5@gmail.com", Gender = 1, ImageId = 1, IsDeleted = false},
-            new PatientInfo{PatientId = 10, FirstName = "Maria", LastName = "Popkina", Country ="UK", City = "London", Address = "Douning str, 11", BirthDate = new System.DateTime(1970, 1, 18), Phone="380505554334", Email = "mi5@gmail.com", Gender = 1, ImageId = 1, IsDeleted = false},
+            new PatientInfo{Id = 1, FirstName = "James", LastName = "Bond", Country ="UK", City = "London", Address = "Douning str, 11", BirthDate = new System.DateTime(1970, 1, 18), Phone="380505554334", Email = "mi5@gmail.com", Gender = 1, ImageId = 1, IsDeleted = false},
+            new PatientInfo{Id = 2, FirstName = "Ivy", LastName = "Young", Country ="Ireland", City = "Dublin", Address = "Yellow park, 1", BirthDate = new System.DateTime(1980, 9, 28), Phone="380671119999", Email = "ivy@gmail.com", Gender = 2, ImageId = 2, IsDeleted = false},
+            new PatientInfo{Id = 3, FirstName = "Melissa", LastName = "Brown", Country ="Sweden", City = "Stokholm", Address = "Norcheping av, 110", BirthDate = new System.DateTime(1990, 3, 8), Phone="380635554334", Email = "mel@outlook.com", Gender = 2, ImageId = 3, IsDeleted = false},
+            new PatientInfo{Id = 4, FirstName = "John", LastName = "Smith", Country ="UK", City = "London", Address = "Westminster, 11", BirthDate = new System.DateTime(1956, 1, 18), Phone="380975554334", Email = "jo@gmail.com", Gender = 1, ImageId = 4, IsDeleted = false},
+            new PatientInfo{Id = 5, FirstName = "Kevin", LastName = "McBribe", Country ="UK", City = "Aberdin", Address = "Lake view sq, 11", BirthDate = new System.DateTime(1970, 1, 18), Phone="380505554334", Email = "scottish@gmail.com", Gender = 1, ImageId = 5, IsDeleted = false},
+            new PatientInfo{Id = 6, FirstName = "Elizabeth", LastName = "Parker", Country ="UK", City = "London", Address = "Douning str, 11", BirthDate = new System.DateTime(1970, 1, 18), Phone="380505554334", Email = "mi5@gmail.com", Gender = 2, ImageId = 1, IsDeleted = false},
+            new PatientInfo{Id = 7, FirstName = "Frank", LastName = "Connor", Country ="UK", City = "London", Address = "Douning str, 11", BirthDate = new System.DateTime(1970, 1, 18), Phone="380505554334", Email = "mi5@gmail.com", Gender = 1, ImageId = 1, IsDeleted = false},
+            new PatientInfo{Id = 8, FirstName = "Anna", LastName = "Green", Country ="UK", City = "London", Address = "Douning str, 11", BirthDate = new System.DateTime(1970, 1, 18), Phone="380505554334", Email = "mi5@gmail.com", Gender = 1, ImageId = 1, IsDeleted = false},
+            new PatientInfo{Id = 9, FirstName = "Sarah", LastName = "Zimmermann", Country ="UK", City = "London", Address = "Douning str, 11", BirthDate = new System.DateTime(1970, 1, 18), Phone="380505554334", Email = "mi5@gmail.com", Gender = 1, ImageId = 1, IsDeleted = false},
+            new PatientInfo{Id = 10, FirstName = "Maria", LastName = "Popkina", Country ="UK", City = "London", Address = "Douning str, 11", BirthDate = new System.DateTime(1970, 1, 18), Phone="380505554334", Email = "mi5@gmail.com", Gender = 1, ImageId = 1, IsDeleted = false},
         };
 
         private static List<Appointment> mockAppointments = new List<Appointment>
         {
-            new Appointment{AppointmentId = 1, PatientId = 1, Duration = 30, AppointmentDateTime = new System.DateTime(2018, 10,1), Purpose="Diagnostic", IsDeleted = false, UserId = 1},
-            new Appointment{AppointmentId = 2, PatientId = 2, Duration = 30, AppointmentDateTime = new System.DateTime(2018, 10,2), Purpose="Analysis", IsDeleted = false, UserId = 1},
-            new Appointment{AppointmentId = 3, PatientId = 3, Duration = 30, AppointmentDateTime = new System.DateTime(2018, 10,3), Purpose="Procedures", IsDeleted = false, UserId = 1},
-            new Appointment{AppointmentId = 4, PatientId = 4, Duration = 30, AppointmentDateTime = new System.DateTime(2018, 10,4), Purpose="Claims", IsDeleted = false, UserId = 2},
-            new Appointment{AppointmentId = 5, PatientId = 5, Duration = 30, AppointmentDateTime = new System.DateTime(2018, 10,5), Purpose="Diagnostic", IsDeleted = false, UserId = 2},
-            new Appointment{AppointmentId = 6, PatientId = 6, Duration = 30, AppointmentDateTime = new System.DateTime(2018, 10,6), Purpose="Seekness", IsDeleted = false, UserId = 2},
-            new Appointment{AppointmentId = 7, PatientId = 7, Duration = 30, AppointmentDateTime = new System.DateTime(2018, 10,7), Purpose="Claims", IsDeleted = false, UserId = 3},
-            new Appointment{AppointmentId = 8, PatientId = 4, Duration = 30, AppointmentDateTime = new System.DateTime(2018, 10,8), Purpose="Diagnostic", IsDeleted = false, UserId = 1},
-            new Appointment{AppointmentId = 9, PatientId = 1, Duration = 30, AppointmentDateTime = new System.DateTime(2018, 10,9), Purpose="Diagnostic", IsDeleted = false, UserId = 1},
-            new Appointment{AppointmentId = 10, PatientId = 2, Duration = 30, AppointmentDateTime = new System.DateTime(2018, 10,10), Purpose="Diagnostic", IsDeleted = false, UserId = 1},
-            new Appointment{AppointmentId = 11, PatientId = 10, Duration = 30, AppointmentDateTime = new System.DateTime(2018, 10,11), Purpose="Diagnostic", IsDeleted = false, UserId = 1},
+            new Appointment{Id = 1, PatientId = 1, Duration = 30, AppointmentDateTime = new System.DateTime(2018, 10,1), Purpose="Diagnostic", IsDeleted = false, UserId = 1},
+            new Appointment{Id = 2, PatientId = 2, Duration = 30, AppointmentDateTime = new System.DateTime(2018, 10,2), Purpose="Analysis", IsDeleted = false, UserId = 1},
+            new Appointment{Id = 3, PatientId = 3, Duration = 30, AppointmentDateTime = new System.DateTime(2018, 10,3), Purpose="Procedures", IsDeleted = false, UserId = 1},
+            new Appointment{Id = 4, PatientId = 4, Duration = 30, AppointmentDateTime = new System.DateTime(2018, 10,4), Purpose="Claims", IsDeleted = false, UserId = 2},
+            new Appointment{Id = 5, PatientId = 5, Duration = 30, AppointmentDateTime = new System.DateTime(2018, 10,5), Purpose="Diagnostic", IsDeleted = false, UserId = 2},
+            new Appointment{Id = 6, PatientId = 6, Duration = 30, AppointmentDateTime = new System.DateTime(2018, 10,6), Purpose="Seekness", IsDeleted = false, UserId = 2},
+            new Appointment{Id = 7, PatientId = 7, Duration = 30, AppointmentDateTime = new System.DateTime(2018, 10,7), Purpose="Claims", IsDeleted = false, UserId = 3},
+            new Appointment{Id = 8, PatientId = 4, Duration = 30, AppointmentDateTime = new System.DateTime(2018, 10,8), Purpose="Diagnostic", IsDeleted = false, UserId = 1},
+            new Appointment{Id = 9, PatientId = 1, Duration = 30, AppointmentDateTime = new System.DateTime(2018, 10,9), Purpose="Diagnostic", IsDeleted = false, UserId = 1},
+            new Appointment{Id = 10, PatientId = 2, Duration = 30, AppointmentDateTime = new System.DateTime(2018, 10,10), Purpose="Diagnostic", IsDeleted = false, UserId = 1},
+            new Appointment{Id = 11, PatientId = 10, Duration = 30, AppointmentDateTime = new System.DateTime(2018, 10,11), Purpose="Diagnostic", IsDeleted = false, UserId = 1},
 
         };
     }    
