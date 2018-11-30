@@ -9,7 +9,7 @@ namespace PatientBO.ViewModels
     /// </summary>
     public class PatientView : IComparable<PatientView>
     {
-        public int PatientId { get; set; }
+        public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
 

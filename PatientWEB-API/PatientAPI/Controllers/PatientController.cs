@@ -39,7 +39,7 @@ namespace PatientAPI.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            List<PatientView> patients = _service.GetPatients().ToList();
+            IEnumerable<PatientView> patients = _service.GetPatients();
 
             return Ok(patients);
         }
@@ -52,7 +52,7 @@ namespace PatientAPI.Controllers
         [HttpGet("recent")]
         public IActionResult GetRecent()
         {
-            List<PatientView> recentPatients = _service.GetRecentPatients().ToList();
+            IEnumerable<PatientView> recentPatients = _service.GetRecentPatients();
 
             return Ok(recentPatients);
         }
